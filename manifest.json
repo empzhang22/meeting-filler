@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "When2Meet Auto Clicker",
+    "version": "1.0",
+    "description": "Auto-selects all time slots on When2Meet",
+    "permissions": [
+        "scripting",
+        "activeTab"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["*://www.when2meet.com/*"],
+            "js": ["content.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "icons": {
+        "48": "icon.png"
+    }
+}
