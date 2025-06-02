@@ -64,3 +64,10 @@ console.log(isVisible ? 'YouGrid is visible' : 'YouGrid is hidden');
 ```
 
 Can check first that "YouGrid" is not style="display:none" to ensure that the user has indeed signed in
+
+<h3><u>6/1</h3></u>
+
+There are now three concurrently "working" components that need to work together
+- There's a really simple pop-up window that comes up but is missing a button to actually trigger the thing
+- The extension won't click anything until you sign in but clicks every cell; also, clicking everything leads to '504' error, which means it doesn't save properly; need to slow down
+- The google calendar events are loaded properly

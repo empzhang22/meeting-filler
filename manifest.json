@@ -14,7 +14,13 @@
             "run_at": "document_idle"
         }
     ],
+    "action": {
+        "default_popup": "window.html",
+        "default_icon": "favicon.ico"
+    },
     "icons": {
-        "48": "icon.png"
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
     }
 }
