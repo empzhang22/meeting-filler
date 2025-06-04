@@ -1,26 +1,15 @@
 {
     "manifest_version": 3,
-    "name": "When2Meet Auto Clicker",
+    "name": "When2Meet Autoclicker",
     "version": "1.0",
-    "description": "Auto-selects all time slots on When2Meet",
-    "permissions": [
-        "scripting",
-        "activeTab"
+    "permissions": ["identity"],
+    "host_permissions": [
+        "https://www.googleapis.com/*"
     ],
-    "content_scripts": [
-        {
-            "matches": ["*://www.when2meet.com/*"],
-            "js": ["content.js"],
-            "run_at": "document_idle"
-        }
-    ],
-    "action": {
-        "default_popup": "window.html",
-        "default_icon": "favicon.ico"
+    "oauth2": {
+        "client_id": "33881249550-fklvaslchifun0ktjksm557pbnvimefm.apps.googleusercontent.com",
+        "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]
     },
-    "icons": {
-        "16": "icon.png",
-        "48": "icon.png",
-        "128": "icon.png"
-    }
+    "action": { "default_popup": "popup.html" },
+    "background": { "service_worker": "background.js" }
 }
