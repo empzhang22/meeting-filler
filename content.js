@@ -1,34 +1,31 @@
-function autoClickAllCells() {
-    const cells = document.querySelectorAll('#YouGridSlots > div > div');
+const SLOP = 5;
 
-    cells.forEach(cell => {
-        const downEvent = new MouseEvent('mousedown', {
-            bubbles: true,
-            cancelable: true,
-            view: window
-        });
+const wait = ms => new Promise(r => setTimeout(r, ms));
 
-        const upEvent = new MouseEvent('mouseup', {
-            bubbles: true,
-            cancelable: true,
-            view: window
-        });
+async function autoClickAllCells() {
+    const cells = [...document.querySelectorAll('#YouGridSlots > div > div')];
 
-        cell.dispatchEvent(downEvent);
-        cell.dispatchEvent(upEvent);
-    });
+    for (const cell of cells) {
+        cell.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        await wait(SLOP);
 
-    console.log(`Clicked ${cells.length} cells`);
+        cell.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true }));
+        await wait(SLOP);
+    }
+
+    console.log(`clicked ${cells.length} cells with ${SLOP} ms pacing`);
 }
 
-function waitForLoginAndClick() {
-    const interval = setInterval(() => {
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+    if (msg.type !== 'AUTOFILL_W2M') return;
+
+    const timer = setInterval(() => {
         const grid = document.getElementById('YouGrid');
         if (grid && window.getComputedStyle(grid).display !== 'none') {
-            clearInterval(interval);
-            autoClickAllCells();
+            clearInterval(timer);
+            autoClickAllCells().then(() => sendResponse({ done: true }));
         }
-    }, 1000);
-}
+    }, 500);
 
-waitForLoginAndClick();
+    return true;
+});
